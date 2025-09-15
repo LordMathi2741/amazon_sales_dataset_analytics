@@ -3,9 +3,12 @@ from pandas import DataFrame
 from models.sale import Sale
 from utils.formatters import price_formatter, ratting_formatter
 def load_data():
-    data = reader(open('datasets/amazon.csv'))
-    headers = next(data)
-    return DataFrame(data, columns=headers)
+    try:
+        data = reader(open('datasets/amazon.csv'))
+        headers = next(data)
+        return DataFrame(data, columns=headers)
+    except FileNotFoundError:
+       raise FileNotFoundError("The dataset file was not found.")
 
 def process_data(data: DataFrame):
     sales = []
